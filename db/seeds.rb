@@ -17,6 +17,16 @@ posts = Post.all
   )
 end
 
+Post.find_or_create_by!(
+  title: "Idempotent title here",
+  body: "My idempotent body to match the idempotent title"
+)
+
+Comment.find_or_create_by!(
+  post: posts.find_by_title("Idempotent title here"),
+  body: "This comment has an uniquely idempotent body"
+)
+
 puts "Seed finished"
 puts "#{Post.count} posts created"
 puts "#{Comment.count} comments created"
